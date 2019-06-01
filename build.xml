@@ -1,0 +1,34 @@
+<project name="XFixToYFix" basedir="." default="run">
+
+    <property name="version">0.1.0</property>
+    <property name="dir.src">src</property>
+    <property name="dir.build">build</property>
+    <property name="dir.build.classes">${dir.build}/classes</property>
+    <property name="file.jar">Maze-${version}.jar</property>
+
+    <target name="clean">
+        <delete dir="${dir.build}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${dir.build}"/>
+        <mkdir dir="${dir.build.classes}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${dir.src}" destdir="${dir.build.classes}" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar basedir="${dir.build.classes}" file="${file.jar}" >
+            <manifest>
+                <attribute name="Main-Class" value="ir.koliber.Main" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${file.jar}" fork="true"/>
+    </target>
+
+</project>
